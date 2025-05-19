@@ -2,74 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Full-Scale Dummy Audit Site</title>
-  <meta name="description" content="A concise summary of your page content goes here, ideally between 150-160 characters.">
-  <!-- Missing viewport meta -->
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <title>Advanced Dummy Audit Site</title>
 
-  <!-- Bloated CSS frameworks loaded render-blocking -->
-  <link rel="stylesheet" href="assets/css/bootstrap.css">
-  <link rel="stylesheet" href="assets/css/animate.css">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- ✕ Missing viewport entirely → mobile layouts break -->
+  <!-- ✕ No <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
-  <!-- No preconnect for Google Fonts or CDN -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="preload" as="style" onload="this.rel='stylesheet'">
-<!-- HELLO -->
-  <!-- Blocking JS in <head> → increases TBT & slows TTI -->
-  <script src="assets/js/jquery.js"></script>
-  <script src="assets/js/analytics.js"></script>
-  <script src="assets/js/main.js"></script>
+  <!-- ✕ Huge single CSS bundle, no critical‐CSS extraction (600 KB!) -->
+  <link rel="stylesheet" href="assets/css/main.css">
 
-  <!-- Missing SEO tags → meta description, canonical, etc. -->
+  <!-- ✕ No font-display swap on custom font preload → text invisible until loaded -->
+  <link rel="preload" href="assets/fonts/CustomFont.woff2" as="font">
+  <link rel="stylesheet" href="assets/css/fonts.css">
+
+  <!-- ✕ No preconnect or preload for third‐party origins (CDN, analytics) -->
+  <!-- ✕ No resource hints at all -->
+
+  <!-- ✕ Synchronous third-party scripts blocking parser -->
+  <script src="https://cdn.analytics-provider.com/analytics.js"></script>
+  <script src="https://connect.facebook.net/en_US/fbevents.js"></script>
+
+  <!-- ✕ Massive JS bundle, no code‐splitting, no modulepreload, no tree‐shaking -->
+  <script src="assets/js/vendor.bundle.js"></script>
+  <script src="assets/js/app.bundle.js" defer></script>
+
+  <!-- ✕ Inlined 50 KB of critical CSS in <style> tag → prevents caching, bloats HTML -->
+  <style>
+    /* 50 KB of inline CSS here… */
+  </style>
+
+  <!-- ✕ Missing any caching headers hints → no <link rel="manifest"> HTTP/2 push hints -->
 </head>
 <body>
   <header>
-    <img src="assets/images/logo.svg" alt>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
+    <!-- ✕ Unoptimized SVG logo, no viewBox attribute (15 KB) -->
+    <img src="assets/images/logo.svg" alt="Logo">
+    <!-- ✕ Synchronous document.write use -->
+    <script>document.write('<nav><ul><li>…</li></ul></nav>');</script>
   </header>
 
-  <!-- Hero section with massive image, no lazy-loading or srcset -->
-  <section id="hero">
-    <h1>Welcome to Full-Scale Dummy Site</h1>
-    <p>Testing Core Web Vitals issues at scale</p>
-    <img src="assets/images/hero-large.jpg" alt>
-    <button onclick="heavyLoop()">Run Heavy Loop</button>
-  </section>
+  <main>
+    <section id="hero">
+      <h1>Welcome to Advanced Dummy Site</h1>
+      <!-- ✕ No lazy-loading or srcset on hero image (3 MB JPG) -->
+      <img src="assets/images/hero-large.jpg" alt="Hero image">
+    </section>
 
-  <!-- Feature grid with multiple large images, none lazy-loaded -->
-  <section id="features" class="animate__animated animate__bounceIn">
-    <h2>Features (Bad Practices Everywhere)</h2>
-    <div class="feature-grid">
-      <div><img src="assets/images/feature1.jpg" alt=""><p>Feature 1</p></div>
-      <div><img src="assets/images/feature2.jpg" alt=""><p>Feature 2</p></div>
-      <div><img src="assets/images/feature3.jpg" alt=""><p>Feature 3</p></div>
-      <div><img src="assets/images/feature4.jpg" alt=""><p>Feature 4</p></div>
-    </div>
-  </section>
+    <section id="features">
+      <h2>Features</h2>
+      <div class="grid">
+        <!-- ✕ No lazy-loading on any of these large images -->
+        <img src="assets/images/feature1.jpg" alt="Feature 1">
+        <img src="assets/images/feature2.jpg" alt="Feature 2">
+        <img src="assets/images/feature3.jpg" alt="Feature 3">
+      </div>
+    </section>
 
-  <!-- Embedded YouTube iframe, no lazy-loading → additional payload late in load -->
-  <section id="video">
-    <h2>Watch Our Video</h2>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-  </section>
+    <!-- ✕ Heavy CPU work blocking main thread on load -->
+    <script>
+      // 5-second busy loop
+      const start = Date.now();
+      while (Date.now() - start < 5000) { /* busy */ }
+    </script>
+  </main>
 
   <footer>
-    <p>&copy; Dummy Audit Site</p>
+    <p>&copy; Advanced Dummy Audit Site</p>
   </footer>
 
-  <!-- PWA manifest, wrong registration timing, missing caching logic -->
-  <link rel="manifest" href="manifest.json">
+  <!-- ✕ Poor service-worker strategy: network-first for ALL assets → broken offline -->
   <script>
     if ('serviceWorker' in navigator) {
-      // registers too late, without caching listeners
-      navigator.serviceWorker.register('service-worker.js');
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        // caches everything network-first
+      });
     }
   </script>
+
+  <!-- ✕ No HTTP compression (no Brotli/Gzip) hints, no server timing hints -->
 </body>
 </html>
