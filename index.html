@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Full-Scale Dummy Audit Site</title>
-  <meta name="description" content="A concise summary of your page content goes here, ideally between 150-160 characters.">
   <!-- Missing viewport meta -->
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
@@ -15,12 +14,12 @@
   <!-- No preconnect for Google Fonts or CDN -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 <!-- HELLO -->
-  <!-- Blocking JS in <head> ΓåÆ increases TBT & slows TTI -->
+  <!-- Blocking JS in <head> → increases TBT & slows TTI -->
   <script src="assets/js/jquery.js"></script>
   <script src="assets/js/analytics.js"></script>
   <script src="assets/js/main.js"></script>
 
-  <!-- Missing SEO tags ΓåÆ meta description, canonical, etc. -->
+  <!-- Missing SEO tags → meta description, canonical, etc. -->
 </head>
 <body>
   <header>
@@ -53,7 +52,7 @@
     </div>
   </section>
 
-  <!-- Embedded YouTube iframe, no lazy-loading ΓåÆ additional payload late in load -->
+  <!-- Embedded YouTube iframe, no lazy-loading → additional payload late in load -->
   <section id="video">
     <h2>Watch Our Video</h2>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
