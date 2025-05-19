@@ -1,0 +1,35 @@
+/* Bloated style file with many unused rules */
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+.unused-class {
+  color: hotpink;
+  background: black;
+}
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.feature-grid div {
+  padding: 1rem;
+}
+/* Add dozens of dummy selectors to bloat payload... */
+.section {
+  padding: 5rem;
+}
+.section .title {
+  font-size: 3rem;
+}
+.section .desc {
+  line-height: 1.8;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full-Scale Dummy Audit Site</title>
+  <!-- Missing viewport meta -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+  <!-- Bloated CSS frameworks loaded render-blocking -->
+  <link rel="stylesheet" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/animate.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- No preconnect for Google Fonts or CDN -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+
+  <!-- Blocking JS in <head> → increases TBT & slows TTI -->
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/js/analytics.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- Missing SEO tags → meta description, canonical, etc. -->
+</head>
+<body>
+  <header>
+    <img src="assets/images/logo.svg" alt>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero section with massive image, no lazy-loading or srcset -->
+  <section id="hero">
+    <h1>Welcome to Full-Scale Dummy Site</h1>
+    <p>Testing Core Web Vitals issues at scale</p>
+    <img src="assets/images/hero-large.jpg" alt>
+    <button onclick="heavyLoop()">Run Heavy Loop</button>
+  </section>
+
+  <!-- Feature grid with multiple large images, none lazy-loaded -->
+  <section id="features" class="animate__animated animate__bounceIn">
+    <h2>Features (Bad Practices Everywhere)</h2>
+    <div class="feature-grid">
+      <div><img src="assets/images/feature1.jpg" alt=""><p>Feature 1</p></div>
+      <div><img src="assets/images/feature2.jpg" alt=""><p>Feature 2</p></div>
+      <div><img src="assets/images/feature3.jpg" alt=""><p>Feature 3</p></div>
+      <div><img src="assets/images/feature4.jpg" alt=""><p>Feature 4</p></div>
+    </div>
+  </section>
+
+  <!-- Embedded YouTube iframe, no lazy-loading → additional payload late in load -->
+  <section id="video">
+    <h2>Watch Our Video</h2>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+  </section>
+
+  <footer>
+    <p>&copy; Dummy Audit Site</p>
+  </footer>
+
+  <!-- PWA manifest, wrong registration timing, missing caching logic -->
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      // registers too late, without caching listeners
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
